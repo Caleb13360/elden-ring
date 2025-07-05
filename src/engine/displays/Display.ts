@@ -33,7 +33,7 @@ export class Display {
                 // Check if we have an image mapping for this character
                 if (imageMap[displayChar]) {
                     const img: HTMLImageElement = document.createElement('img');
-                    img.src = '../../../../../../images/'+imageMap[displayChar];
+                    img.src = 'images/'+imageMap[displayChar];
                     img.alt = displayChar;
                     img.className = 'w-full h-full object-cover';
                     cell.appendChild(img);
