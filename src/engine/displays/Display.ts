@@ -73,12 +73,48 @@ export class Display {
             <div class="font-mono">[${visualBar}]</div>
         `;
     }
+    
     /**
      * Prints a String and then terminates the line.
      * @param s the string to print
      */
+    // println(s: string): void {
+    //     console.log(s);
+    // }
     println(s: string): void {
-        console.log(s);
+        // Add timestamp to message
+        const timestamp = new Date().toLocaleTimeString();
+        const messageWithTime = `[${timestamp}] ${s}`;
+        
+        // Add to messages array
+        gameMessages.push(messageWithTime);
+        
+        // Keep only the last 20 messages
+        if (gameMessages.length > 20) {
+            gameMessages.shift(); // Remove the oldest message
+        }
+        
+        // Update the display
+        this.renderMessages();
+    }
+
+    // Function to render messages in the container
+    renderMessages(): void {
+        const messagesContainer: HTMLElement = document.getElementById('messages-container')!;
+        
+        // Clear existing messages
+        messagesContainer.innerHTML = '';
+        
+        // Add each message as a div
+        gameMessages.forEach(message => {
+            const messageDiv: HTMLDivElement = document.createElement('div');
+            messageDiv.className = 'py-1 border-b border-gray-700 last:border-b-0';
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+        });
+        
+        // Auto-scroll to bottom to show latest messages
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     /**
@@ -112,3 +148,5 @@ let imageMap: Record<string, string> = {
   "D": "stone_door.png",
   ".": "grass.png",
 };
+
+let gameMessages: string[] = [];
